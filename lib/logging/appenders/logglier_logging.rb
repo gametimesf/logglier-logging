@@ -1,4 +1,4 @@
-require 'logglier'
+require 'logglier/client'
 
 module Logging
   module Appenders
@@ -19,13 +19,14 @@ module Logging
         # customer token for loggly
         self.url = opts.fetch(:url)
         raise ArgumentError, 'Must specify url' if @url.nil?
-        self.loggly = Logglier.new(@url, threaded: true, format: :json)
+        self.loggly = Logglier::Client.new(@url, threaded: true, format: :json)
+        self.layout.items = %w(timestamp level logger message pid)
         self.levels = Logging::LEVELS.invert
       end
 
       def write(event)
         message = event.data.is_a?(Hash) ? event.data : { message: event.data }
-        @loggly.public_send(@levels[event.level], message)
+        @loggly.write(self.layout.format(event))
       end
 
       def close( *args )
