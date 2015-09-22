@@ -20,7 +20,7 @@ module Logging
         self.url = opts.fetch(:url)
         raise ArgumentError, 'Must specify url' if @url.nil?
         self.loggly = Logglier::Client.new(@url, threaded: true, format: :json)
-        self.layout.items = %w(timestamp level logger message pid)
+        self.layout.items = %w(timestamp level logger message pid hostname)
         self.levels = Logging::LEVELS.invert
       end
 
