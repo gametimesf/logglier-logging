@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "logglier-logging"
-  s.version = "0.0.2"
+  s.version = "0.0.3"
 
   s.authors = ["Eric Nicholas"]
   s.require_paths = ["lib"]
